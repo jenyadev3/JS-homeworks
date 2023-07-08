@@ -8,9 +8,8 @@ links.forEach(link => {
     const hasMenu = parentItem.querySelector(".menu_sub");
 
     if (hasMenu) { 
-      menu.forEach(item => item.classList.remove("menu_active")); 
-      hasMenu.classList.add("menu_active");
+      hasMenu.classList.toggle("menu_active");
       return false;
     }
-   }
+  }
 })
