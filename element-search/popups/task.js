@@ -3,15 +3,15 @@ const successModal = document.getElementById("modal_success");
 const dangerButton = document.querySelector(".btn_danger");
 const closeButtons = document.querySelectorAll(".modal__close_times");
 
-mainModal.className = "modal modal_active";
+mainModal.classList.add("modal_active");
 
 dangerButton.onclick = function () {
-  mainModal.className = "modal";
-  successModal.className = "modal modal_active";
+  mainModal.classList.remove("modal_active");
+  successModal.classList.add("modal_active");
 }
 
 closeButtons.forEach(close => {
   close.onclick = function () {
-    successModal.className = "modal";
+    successModal.classList.remove("modal_active");
   }
 })
