@@ -12,6 +12,7 @@ dangerButton.onclick = function () {
 
 closeButtons.forEach(close => {
   close.onclick = function () {
+    mainModal.classList.remove("modal_active");
     successModal.classList.remove("modal_active");
   }
 })
