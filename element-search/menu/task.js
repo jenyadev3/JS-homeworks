@@ -1,6 +1,4 @@
 const links = document.querySelectorAll(".menu__link");
-const menu = document.querySelectorAll(".menu_sub");
-const menuItem = document.querySelectorAll(".menu__item")
 
 links.forEach(link => {
    link.onclick = function () { 
