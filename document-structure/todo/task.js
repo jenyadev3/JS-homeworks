@@ -13,10 +13,11 @@ addButton.addEventListener("click", (event) => {
   </div>`
   list.insertAdjacentHTML("beforeend", newTask);
   input.value = "";
-  list.addEventListener("click", (event) => {
-    if (event.target.classList.contains("task__remove")) {
-      event.target.closest(".task").remove(); 
-    }  
-  })
+})
+
+list.addEventListener("click", (event) => {
+  if (event.target.classList.contains("task__remove")) {
+  event.target.closest(".task").remove(); 
+  }  
 })
 
