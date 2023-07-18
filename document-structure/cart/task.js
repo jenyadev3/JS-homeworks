@@ -1,26 +1,27 @@
-const cart = document.querySelector(".cart__title");
-const buttons = document.querySelectorAll(".product__add");
-const container = document.querySelector(".products");
+const cart = document.querySelector(".cart__products"); 
+const buttons = document.querySelectorAll(".product__add"); 
+const container = document.querySelector(".products"); 
 const cartItems = {};
 
 container.addEventListener("click", (event) => {
   const decButton = event.target.classList.contains("product__quantity-control_dec");
   const incButton = event.target.classList.contains("product__quantity-control_inc");
 
-  if (incButton || decButton) {
-    const product = event.target.closest(".product"); 
-    const value = product.querySelector(".product__quantity-value"); 
+  if (decButton || incButton) {
+    const product = event.target.closest(".product");
+    const value = product.querySelector(".product__quantity-value");
     const productId = product.getAttribute("data-id");
     const quantity = parseInt(value.textContent);
 
     if (decButton && quantity > 0) {
       value.textContent--;
       cartItems[productId] = quantity - 1;
-    } else if (incButton) { 
+      updateCartItem(productId, cartItems[productId]);
+    } else if (incButton && cartItems.hasOwnProperty(productId)) {
       value.textContent++;
       cartItems[productId] = quantity + 1;
+      updateCartItem(productId, cartItems[productId]);
     }
-    updateCartItem(productId, cartItems[productId]);
   }
 });
 
@@ -64,10 +65,3 @@ buttons.forEach(item => {
   });
 });
 
-const addToCartButtons = document.querySelectorAll(".product__add-to-cart");
-addToCartButtons.forEach(button => {
-  button.addEventListener("click", (event) => {
-    const productId = event.target.closest(".product").getAttribute("data-id");
-    addToCart(productId);
-  });
-});
