@@ -1,6 +1,6 @@
-const cart = document.querySelector(".cart__products"); 
-const buttons = document.querySelectorAll(".product__add"); 
-const container = document.querySelector(".products"); 
+const cart = document.querySelector(".cart__products");
+const buttons = document.querySelectorAll(".product__add");
+const container = document.querySelector(".products");
 const cartItems = {};
 
 container.addEventListener("click", (event) => {
@@ -13,26 +13,17 @@ container.addEventListener("click", (event) => {
     const productId = product.getAttribute("data-id");
     const quantity = parseInt(value.textContent);
 
-    if (decButton && quantity > 0) {
+    if (decButton && quantity > 1) {
       value.textContent--;
       cartItems[productId] = quantity - 1;
-      updateCartItem(productId, cartItems[productId]);
-    } else if (incButton && cartItems.hasOwnProperty(productId)) {
+    } else if (incButton) {
       value.textContent++;
       cartItems[productId] = quantity + 1;
-      updateCartItem(productId, cartItems[productId]);
     }
   }
 });
 
 function updateCartItem(productId, quantity) {
-  if (quantity === 0) {
-    delete cartItems[productId];
-    const cartProduct = cart.querySelector(`[data-id="${productId}"]`);
-    if (cartProduct) {
-      cartProduct.remove();
-    }
-  } else {
     cartItems[productId] = quantity;
     const cartProduct = cart.querySelector(`[data-id="${productId}"]`);
     if (cartProduct) {
@@ -46,14 +37,13 @@ function updateCartItem(productId, quantity) {
         </div>
       `;
       cart.insertAdjacentHTML("beforeend", productCard);
-    }
   }
 }
 
 function addToCart(productId) {
   if (productId) {
-    const quantity = cartItems[productId] || 0;
-    cartItems[productId] = quantity + 1;
+    const quantity = cartItems[productId] || 1;
+    cartItems[productId] = quantity;
     updateCartItem(productId, cartItems[productId]);
   }
 }
