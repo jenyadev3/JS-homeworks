@@ -7,12 +7,15 @@ elements.forEach((item) => {
     event.preventDefault();
 
     if (activeTooltip) {
-      activeTooltip.classList.remove("tooltip_active");
-      activeTooltip = null;
-      return;
+      if (activeTooltip.innerText === item.title) {
+        activeTooltip.classList.toggle("tooltip_active");
+        return;
+      } else {
+        activeTooltip.classList.remove("tooltip_active");
+      }
     }
 
-    const text = item.getAttribute("title");
+    const text = item.title;
     const tooltip = `<div class="tooltip">${text}</div>`;
     item.insertAdjacentHTML("afterend", tooltip);
     const tooltipElement = item.nextSibling;
@@ -30,7 +33,6 @@ document.addEventListener("click", (event) => {
   if (!target.classList.contains("has-tooltip")) {
     if (activeTooltip) {
       activeTooltip.classList.remove("tooltip_active");
-      activeTooltip = null;
     }
   }
 });
