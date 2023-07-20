@@ -24,19 +24,19 @@ container.addEventListener("click", (event) => {
 });
 
 function updateCartItem(productId, quantity) {
-    cartItems[productId] = quantity;
-    const cartProduct = cart.querySelector(`[data-id="${productId}"]`);
-    if (cartProduct) {
-      cartProduct.querySelector(".cart__product-count").textContent = quantity;
-    } else {
-      const productImage = event.target.closest(".product").querySelector(".product__image").src;
-      const productCard = `
-        <div class="cart__product" data-id="${productId}">
-          <img class="cart__product-image" src="${productImage}">
-          <div class="cart__product-count">${quantity}</div>
-        </div>
-      `;
-      cart.insertAdjacentHTML("beforeend", productCard);
+  cartItems[productId] = quantity;
+  const cartProduct = cart.querySelector(`[data-id="${productId}"]`);
+  if (cartProduct) {
+    cartProduct.querySelector(".cart__product-count").textContent = quantity;
+  } else {
+    const productImage = container.querySelector(`[data-id="${productId}"] .product__image`).src;
+    const productCard = `
+      <div class="cart__product" data-id="${productId}">
+        <img class="cart__product-image" src="${productImage}">
+        <div class="cart__product-count">${quantity}</div>
+      </div>
+    `;
+    cart.insertAdjacentHTML("beforeend", productCard);
   }
 }
 
@@ -44,7 +44,7 @@ function addToCart(productId) {
   if (productId) {
     const quantity = cartItems[productId] || 1;
     cartItems[productId] = quantity;
-    updateCartItem(productId, cartItems[productId]);
+    updateCartItem(productId, quantity);
   }
 }
 
