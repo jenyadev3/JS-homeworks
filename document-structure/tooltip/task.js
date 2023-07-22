@@ -16,15 +16,17 @@ elements.forEach((item) => {
     }
 
     const text = item.title;
-    const tooltip = `<div class="tooltip">${text}</div>`;
-    item.insertAdjacentHTML("afterend", tooltip);
-    const tooltipElement = item.nextSibling;
-    tooltipElement.classList.add("tooltip_active");
-    const position = item.getBoundingClientRect();
-    tooltipElement.style.left = `${position.left}px`;
-    tooltipElement.style.top = `${position.bottom}px`;
+    const tooltip = document.createElement("div");
+    tooltip.classList.add("tooltip");
+    tooltip.innerText = text;
+    document.body.appendChild(tooltip); 
 
-    activeTooltip = tooltipElement;
+    const position = item.getBoundingClientRect();
+    tooltip.style.left = `${position.left}px`;
+    tooltip.style.top = `${position.bottom}px`;
+
+    activeTooltip = tooltip;
+    activeTooltip.classList.add("tooltip_active");
   });
 });
 
@@ -33,6 +35,8 @@ document.addEventListener("click", (event) => {
   if (!target.classList.contains("has-tooltip")) {
     if (activeTooltip) {
       activeTooltip.classList.remove("tooltip_active");
+      document.body.removeChild(activeTooltip);
+      activeTooltip = null;
     }
   }
 });
