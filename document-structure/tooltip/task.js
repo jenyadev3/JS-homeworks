@@ -6,13 +6,14 @@ elements.forEach((item) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
 
+    if (activeTooltip && activeTooltip.innerText === item.title) {
+      activeTooltip.classList.toggle("tooltip_active");
+      return;
+    }
+
     if (activeTooltip) {
-      if (activeTooltip.innerText === item.title) {
-        activeTooltip.classList.toggle("tooltip_active");
-        return;
-      } else {
-        activeTooltip.classList.remove("tooltip_active");
-      }
+      activeTooltip.classList.remove("tooltip_active");
+      document.body.removeChild(activeTooltip);
     }
 
     const text = item.title;
