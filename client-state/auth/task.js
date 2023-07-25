@@ -14,10 +14,11 @@ button.addEventListener("click", (event) => {
     if(xhr.status >= 200 && xhr.status < 300) {
       const response = JSON.parse(xhr.responseText);
       if(response.success) {
-        const userId = response.user.id;
+        const userId = response.user_id;
         localStorage.setItem("id", userId)
         user.textContent = userId;
         welcome.classList.add("welcome_active");
+        form.style.display = "none";
       } else {
         alert("Неверный логин/пароль");
       }
