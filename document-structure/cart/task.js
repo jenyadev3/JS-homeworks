@@ -3,26 +3,6 @@ const buttons = document.querySelectorAll(".product__add");
 const container = document.querySelector(".products");
 const cartItems = {};
 
-container.addEventListener("click", (event) => {
-  const decButton = event.target.classList.contains("product__quantity-control_dec");
-  const incButton = event.target.classList.contains("product__quantity-control_inc");
-
-  if (decButton || incButton) {
-    const product = event.target.closest(".product");
-    const value = product.querySelector(".product__quantity-value");
-    const productId = product.getAttribute("data-id");
-    const quantity = parseInt(value.textContent);
-
-    if (decButton && quantity > 1) {
-      value.textContent--;
-      cartItems[productId] = quantity - 1;
-    } else if (incButton) {
-      value.textContent++;
-      cartItems[productId] = quantity + 1;
-    }
-  }
-});
-
 function updateCartItem(productId, quantity) {
   cartItems[productId] = quantity;
   const cartProduct = cart.querySelector(`[data-id="${productId}"]`);
@@ -40,18 +20,38 @@ function updateCartItem(productId, quantity) {
   }
 }
 
-function addToCart(productId) {
+function addToCart(productId, quantity) {
   if (productId) {
-    const quantity = cartItems[productId] || 1;
-    cartItems[productId] = quantity;
-    updateCartItem(productId, quantity);
+    const currentQuantity = cartItems[productId] || 0;
+    const totalQuantity = currentQuantity + quantity;
+    cartItems[productId] = totalQuantity;
+    updateCartItem(productId, totalQuantity);
   }
 }
 
-buttons.forEach(item => {
+container.addEventListener("click", (event) => {
+  const decButton = event.target.classList.contains("product__quantity-control_dec");
+  const incButton = event.target.classList.contains("product__quantity-control_inc");
+
+  if (decButton || incButton) {
+    const product = event.target.closest(".product");
+    const value = product.querySelector(".product__quantity-value");
+    const productId = product.getAttribute("data-id");
+    const quantity = parseInt(value.textContent);
+
+    if (decButton && quantity > 1) {
+      value.textContent--;
+    } else if (incButton) {
+      value.textContent++;
+    }
+  }
+});
+
+buttons.forEach((item) => {
   item.addEventListener("click", () => {
     const productId = item.closest(".product").getAttribute("data-id");
-    addToCart(productId);
+    const quantity = parseInt(item.closest(".product").querySelector(".product__quantity-value").textContent);
+    addToCart(productId, quantity);
   });
 });
 
